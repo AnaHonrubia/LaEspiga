@@ -1,0 +1,455 @@
+/* ==========================================================
+   La Espiga · Horno y cafetería
+   Idea de diseño: azul de azulejo y amarillo yema sobre un fondo claro y frío.
+   ========================================================== */
+
+/* ---------- 1. VARIABLES ----------
+   Si cambias un color aquí, cambia en toda la web. */
+:root {
+  --fondo: #F5F7FB;
+  --superficie: #FFFFFF;
+  --texto: #15203B;
+  --texto-suave: #56617B;
+  --borde: #DCE2EE;
+  --azul: #1F4BA5;            /* enlaces y detalles */
+  --boton-fondo: #1F4BA5;
+  --boton-texto: #FFFFFF;
+  --yema: #F2B632;            /* color de acento */
+  --yema-texto: #15203B;
+  --suave: #E4EBF8;           /* fondos de resalte */
+  --abierto: #1E7A46;
+  --cerrado: #B3261E;
+
+  --fuente-titulos: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --fuente-texto: "Figtree", "Segoe UI", Arial, sans-serif;
+
+  --radio: 12px;
+  --ancho-max: 1120px;
+  --gutter-izq: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-der: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Modo oscuro: si el móvil/ordenador está en oscuro, solo cambiamos las variables */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fondo: #0D1322;
+    --superficie: #161F35;
+    --texto: #E9EDF6;
+    --texto-suave: #A5AFC6;
+    --borde: #28334F;
+    --azul: #8EADF2;
+    --boton-fondo: #3762C8;
+    --boton-texto: #FFFFFF;
+    --suave: #1C2843;
+    --abierto: #5CC98A;
+    --cerrado: #F28B82;
+    color-scheme: dark;
+  }
+}
+/* Lo mismo para cuando se fuerza el tema oscuro con data-theme="dark" */
+:root[data-theme="dark"] {
+  --fondo: #0D1322;
+  --superficie: #161F35;
+  --texto: #E9EDF6;
+  --texto-suave: #A5AFC6;
+  --borde: #28334F;
+  --azul: #8EADF2;
+  --boton-fondo: #3762C8;
+  --boton-texto: #FFFFFF;
+  --suave: #1C2843;
+  --abierto: #5CC98A;
+  --cerrado: #F28B82;
+  color-scheme: dark;
+}
+
+/* ---------- 2. BASE ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;   /* para que la cabecera fija no tape los títulos */
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulos);
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+}
+p { margin: 0; }
+a { color: var(--azul); }
+
+:focus-visible { outline: 3px solid var(--yema); outline-offset: 3px; }
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-left: var(--gutter-izq);
+  padding-right: var(--gutter-der);
+}
+
+.seccion { padding-block: clamp(3.5rem, 8vw, 6rem); }
+.seccion--alterna { background: var(--superficie); }
+
+.etiqueta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--azul);
+}
+.titulo-seccion { font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800; margin-top: 0.4rem; }
+.intro-seccion { color: var(--texto-suave); max-width: 62ch; margin-top: 0.9rem; }
+
+/* ---------- 3. BOTONES ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.4rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.boton:hover { transform: translateY(-2px); }
+.boton--principal { background: var(--boton-fondo); color: var(--boton-texto); }
+.boton--secundario { background: transparent; color: var(--azul); border-color: var(--azul); }
+
+/* ---------- 4. CABECERA ---------- */
+/* Franja superior en móviles con "notch" */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--superficie);
+  z-index: 60;
+}
+
+.cabecera {
+  position: sticky;           /* se queda pegada arriba al hacer scroll */
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+}
+.cabecera__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 64px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--fuente-titulos);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--texto);
+  text-decoration: none;
+}
+.logo svg { width: 28px; height: 28px; color: var(--yema); }
+
+.menu { display: flex; gap: 1.75rem; list-style: none; margin: 0; padding: 0; }
+.menu a { color: var(--texto); font-weight: 600; text-decoration: none; }
+.menu a:hover { color: var(--azul); }
+
+.boton-menu {
+  display: none;
+  padding: 0.4rem;
+  border: 0;
+  background: none;
+  color: var(--texto);
+  cursor: pointer;
+}
+
+/* En pantallas pequeñas el menú se convierte en desplegable */
+@media (max-width: 760px) {
+  .boton-menu { display: inline-flex; }
+  .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--superficie);
+    border-bottom: 1px solid var(--borde);
+  }
+  .menu.abierto { display: flex; }
+  .menu a {
+    display: block;
+    padding: 1rem var(--gutter-der) 1rem var(--gutter-izq);
+    border-top: 1px solid var(--borde);
+  }
+}
+
+/* ---------- 5. PORTADA ---------- */
+.portada { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.portada__grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.portada__texto { min-width: 0; }
+.portada h1 {
+  margin-top: 0.75rem;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.portada h1 em {
+  font-style: normal;
+  text-decoration: underline;
+  text-decoration-color: var(--yema);
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.12em;
+}
+.portada__texto > p:not(.etiqueta) {
+  max-width: 46ch;
+  margin-top: 1.25rem;
+  font-size: 1.15rem;
+  color: var(--texto-suave);
+}
+.portada__acciones { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+
+/* Panel "Hoy en el horno" */
+.panel-hoy {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+.panel-hoy__titulo { font-size: 1.35rem; }
+.panel-hoy__detalle { color: var(--texto-suave); }
+.panel-hoy__subtitulo { font-weight: 700; margin-bottom: 0.5rem; }
+.panel-hoy__nota { font-size: 0.85rem; color: var(--texto-suave); margin-top: 0.5rem; }
+
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: var(--suave);
+  font-weight: 700;
+}
+.estado::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+.estado--abierto { color: var(--abierto); }
+.estado--cerrado { color: var(--cerrado); }
+
+.hornadas { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }
+.hornada {
+  padding: 0.35rem 0.8rem;
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.hornada.pasada { color: var(--texto-suave); text-decoration: line-through; }
+.hornada.no-hoy { opacity: 0.45; }
+.hornada.siguiente { background: var(--yema); border-color: var(--yema); color: var(--yema-texto); }
+
+@media (max-width: 860px) {
+  .portada__grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- 6. FRANJA DE AZULEJOS ---------- */
+.azulejos {
+  height: 48px;
+  background-color: var(--boton-fondo);
+  background-image:
+    radial-gradient(circle at center, var(--yema) 0 5px, transparent 6px),
+    radial-gradient(circle at 0 0, var(--fondo) 0 12px, transparent 13px),
+    radial-gradient(circle at 100% 0, var(--fondo) 0 12px, transparent 13px),
+    radial-gradient(circle at 0 100%, var(--fondo) 0 12px, transparent 13px),
+    radial-gradient(circle at 100% 100%, var(--fondo) 0 12px, transparent 13px);
+  background-size: 48px 48px;
+}
+
+/* ---------- 7. NOSOTROS ---------- */
+.nosotros {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.nosotros > div { min-width: 0; }
+.datos { display: grid; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+.datos li {
+  display: grid;
+  gap: 0.15rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--yema);
+}
+.datos strong {
+  font-family: var(--fuente-titulos);
+  font-size: 2.2rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.datos span { color: var(--texto-suave); }
+
+@media (max-width: 760px) {
+  .nosotros { grid-template-columns: 1fr; }
+}
+
+/* ---------- 8. CARTA ---------- */
+.filtros { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+.filtro {
+  padding: 0.5rem 1.1rem;
+  border: 1.5px solid var(--borde);
+  border-radius: 999px;
+  background: var(--fondo);
+  color: var(--texto);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.filtro:hover { border-color: var(--azul); }
+.filtro[aria-pressed="true"] {
+  background: var(--boton-fondo);
+  border-color: var(--boton-fondo);
+  color: var(--boton-texto);
+}
+
+.carta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 0 2.5rem;
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+}
+.plato {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px dashed var(--borde);
+}
+.plato__info { flex: 1; min-width: 0; }
+.plato__nombre { display: block; font-weight: 700; }
+.plato__detalle { display: block; font-size: 0.92rem; color: var(--texto-suave); }
+.plato__precio {
+  font-weight: 700;
+  color: var(--azul);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 9. HORARIO Y UBICACIÓN ---------- */
+.dos-columnas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+.dos-columnas > div { min-width: 0; }
+
+.tabla-envoltorio {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+.horario { width: 100%; border-collapse: collapse; }
+.horario th, .horario td {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+}
+.horario td { text-align: right; font-variant-numeric: tabular-nums; }
+.horario tr:last-child > * { border-bottom: 0; }
+.horario tr.hoy { background: var(--suave); }
+.horario tr.hoy th::after { content: " · hoy"; color: var(--azul); }
+
+.direccion { font-style: normal; margin: 1.5rem 0; line-height: 1.8; }
+
+/* ---------- 10. FORMULARIO ---------- */
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+.campo { display: grid; gap: 0.35rem; align-content: start; min-width: 0; }
+.campo--ancho { grid-column: 1 / -1; }
+.campo label { font-size: 0.95rem; font-weight: 600; }
+.campo input, .campo select, .campo textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+}
+.campo textarea { min-height: 120px; resize: vertical; }
+.campo.invalido input, .campo.invalido textarea { border-color: var(--cerrado); }
+.error { min-height: 1.2em; font-size: 0.85rem; color: var(--cerrado); }
+
+.aviso-envio {
+  grid-column: 1 / -1;
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  background: var(--suave);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .formulario { grid-template-columns: 1fr; }
+}
+
+/* ---------- 11. PIE ---------- */
+.pie { padding-block: 2rem; background: var(--superficie); }
+.pie__fila {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+}
+.pie__nota { color: var(--texto-suave); font-size: 0.9rem; }
+
+/* ---------- 12. MENOS MOVIMIENTO ----------
+   Respeta a quien tiene activada la opción de "reducir movimiento" */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .boton { transition: none; }
+  .boton:hover { transform: none; }
+}

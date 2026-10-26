@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <!-- Viewport SIN "user-scalable=no": así la gente puede hacer zoom en el móvil (accesibilidad) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>La Espiga · Horno y cafetería</title>
+  <!-- La descripción es lo que sale en Google debajo del título (SEO básico) -->
+  <meta name="description" content="Horno y cafetería en Villanueva del Trigo. Pan de masa madre, bollería casera y desayunos. Abierto de lunes a sábado.">
+
+  <!-- Fuentes de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===================== CABECERA ===================== -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__fila">
+      <a href="#inicio" class="logo" aria-label="La Espiga, ir al inicio">
+        <!-- Icono de espiga dibujado en SVG (no necesita imagen externa) -->
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path fill="currentColor" d="M16 30V12M16 12c-3-1-5-4-5-7 3 1 5 3 5 7zm0 0c3-1 5-4 5-7-3 1-5 3-5 7zm0 7c-3-1-5-4-5-7 3 1 5 3 5 7zm0 0c3-1 5-4 5-7-3 1-5 3-5 7zm0 7c-3-1-5-4-5-7 3 1 5 3 5 7zm0 0c3-1 5-4 5-7-3 1-5 3-5 7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        La Espiga
+      </a>
+
+      <!-- Botón hamburguesa: solo se ve en el móvil (ver CSS) -->
+      <button class="boton-menu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <nav aria-label="Principal">
+        <ul class="menu" id="menu">
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#carta">Carta</a></li>
+          <li><a href="#horario">Horario</a></li>
+          <li><a href="#encargos">Encargos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+
+    <!-- ===================== PORTADA (hero) ===================== -->
+    <section class="portada">
+      <div class="contenedor portada__grid">
+        <div class="portada__texto">
+          <p class="etiqueta">Horno y cafetería · desde 1987</p>
+          <h1>Pan de pueblo, hecho <em>cada madrugada</em>.</h1>
+          <p>Masa madre, fermentaciones largas y leña de encina. Ven a desayunar o llévate el pan recién salido del horno.</p>
+          <div class="portada__acciones">
+            <a href="#carta" class="boton boton--principal">Ver la carta</a>
+            <a href="#encargos" class="boton boton--secundario">Hacer un encargo</a>
+          </div>
+        </div>
+
+        <!-- Panel "Hoy en el horno": el JavaScript lo rellena según la hora real -->
+        <aside class="panel-hoy" aria-labelledby="titulo-hoy">
+          <h2 id="titulo-hoy" class="panel-hoy__titulo">Hoy en el horno</h2>
+          <p id="estado" class="estado">Consultando horario…</p>
+          <p id="estado-detalle" class="panel-hoy__detalle">Lunes a viernes 7:30–14:00 y 17:00–20:30</p>
+
+          <div>
+            <p class="panel-hoy__subtitulo">Hornadas del día</p>
+            <ul class="hornadas">
+              <li class="hornada" data-min="360">6:00</li>
+              <li class="hornada" data-min="720">12:00</li>
+              <li class="hornada" data-min="1050">17:30</li>
+            </ul>
+            <p class="panel-hoy__nota">La de 17:30 solo de lunes a viernes.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Franja decorativa de "azulejos", hecha solo con CSS -->
+    <div class="azulejos" aria-hidden="true"></div>
+
+    <!-- ===================== NOSOTROS ===================== -->
+    <section id="nosotros" class="seccion">
+      <div class="contenedor nosotros">
+        <div>
+          <p class="etiqueta">Nosotros</p>
+          <h2 class="titulo-seccion">Tres generaciones con las manos en la masa</h2>
+          <p class="intro-seccion">
+            Empezó la abuela Carmen con un horno de leña en la calle Mayor. Hoy seguimos en el mismo sitio,
+            con la misma masa madre y algo más de café. Hacemos el pan a diario y sin prisas:
+            la hogaza fermenta casi dos días antes de entrar al horno.
+          </p>
+        </div>
+
+        <ul class="datos">
+          <li><strong>1987</strong><span>Año en que abrimos el horno</span></li>
+          <li><strong>48 h</strong><span>De fermentación en la hogaza</span></li>
+          <li><strong>6:00</strong><span>Sale la primera hornada</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== CARTA ===================== -->
+    <section id="carta" class="seccion seccion--alterna">
+      <div class="contenedor">
+        <p class="etiqueta">Carta</p>
+        <h2 class="titulo-seccion">Lo que sale del horno</h2>
+        <p class="intro-seccion">Precios con IVA incluido. Las piezas de pan se pueden reservar el día antes.</p>
+
+        <!-- Botones de filtro. "data-categoria" lo lee el JavaScript -->
+        <div class="filtros" role="group" aria-label="Filtrar la carta">
+          <button class="filtro" type="button" data-categoria="todo" aria-pressed="true">Todo</button>
+          <button class="filtro" type="button" data-categoria="pan" aria-pressed="false">Pan</button>
+          <button class="filtro" type="button" data-categoria="bolleria" aria-pressed="false">Bollería</button>
+          <button class="filtro" type="button" data-categoria="desayunos" aria-pressed="false">Desayunos</button>
+        </div>
+
+        <ul class="carta">
+          <li class="plato" data-categoria="pan">
+            <span class="plato__info"><span class="plato__nombre">Pan candeal</span><span class="plato__detalle">Pieza de 500 g, miga prieta</span></span>
+            <span class="plato__precio">1,40 €</span>
+          </li>
+          <li class="plato" data-categoria="pan">
+            <span class="plato__info"><span class="plato__nombre">Hogaza de masa madre</span><span class="plato__detalle">1 kg, 48 h de fermentación</span></span>
+            <span class="plato__precio">4,20 €</span>
+          </li>
+          <li class="plato" data-categoria="pan">
+            <span class="plato__info"><span class="plato__nombre">Barra rústica</span><span class="plato__detalle">250 g, corteza crujiente</span></span>
+            <span class="plato__precio">1,10 €</span>
+          </li>
+          <li class="plato" data-categoria="pan">
+            <span class="plato__info"><span class="plato__nombre">Pan de centeno</span><span class="plato__detalle">400 g, con semillas</span></span>
+            <span class="plato__precio">2,60 €</span>
+          </li>
+          <li class="plato" data-categoria="bolleria">
+            <span class="plato__info"><span class="plato__nombre">Magdalenas caseras</span><span class="plato__detalle">Bolsa de 6 unidades</span></span>
+            <span class="plato__precio">3,00 €</span>
+          </li>
+          <li class="plato" data-categoria="bolleria">
+            <span class="plato__info"><span class="plato__nombre">Napolitana de chocolate</span><span class="plato__detalle">Hojaldre de mantequilla</span></span>
+            <span class="plato__precio">1,50 €</span>
+          </li>
+          <li class="plato" data-categoria="bolleria">
+            <span class="plato__info"><span class="plato__nombre">Rollos de anís</span><span class="plato__detalle">Bolsa de 250 g</span></span>
+            <span class="plato__precio">3,80 €</span>
+          </li>
+          <li class="plato" data-categoria="bolleria">
+            <span class="plato__info"><span class="plato__nombre">Torta de manteca</span><span class="plato__detalle">Receta de la abuela</span></span>
+            <span class="plato__precio">1,20 €</span>
+          </li>
+          <li class="plato" data-categoria="desayunos">
+            <span class="plato__info"><span class="plato__nombre">Café con leche y tostada</span><span class="plato__detalle">Tomate y aceite de oliva virgen extra</span></span>
+            <span class="plato__precio">2,80 €</span>
+          </li>
+          <li class="plato" data-categoria="desayunos">
+            <span class="plato__info"><span class="plato__nombre">Churros con chocolate</span><span class="plato__detalle">Solo sábados</span></span>
+            <span class="plato__precio">3,50 €</span>
+          </li>
+          <li class="plato" data-categoria="desayunos">
+            <span class="plato__info"><span class="plato__nombre">Zumo de naranja natural</span><span class="plato__detalle">Exprimido al momento</span></span>
+            <span class="plato__precio">2,50 €</span>
+          </li>
+          <li class="plato" data-categoria="desayunos">
+            <span class="plato__info"><span class="plato__nombre">Tostada de aceite y ajo</span><span class="plato__detalle">Con pan candeal del día</span></span>
+            <span class="plato__precio">1,60 €</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== HORARIO Y UBICACIÓN ===================== -->
+    <section id="horario" class="seccion">
+      <div class="contenedor dos-columnas">
+        <div>
+          <p class="etiqueta">Horario</p>
+          <h2 class="titulo-seccion">Cuándo encontrarnos</h2>
+          <!-- "data-dias": 0 = domingo, 1 = lunes … 6 = sábado. El JS marca la fila de hoy -->
+          <div class="tabla-envoltorio">
+            <table class="horario">
+              <tbody>
+                <tr data-dias="1,2,3,4,5"><th scope="row">Lunes a viernes</th><td>7:30–14:00 · 17:00–20:30</td></tr>
+                <tr data-dias="6"><th scope="row">Sábado</th><td>8:00–14:00</td></tr>
+                <tr data-dias="0"><th scope="row">Domingo</th><td>Cerrado</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <p class="etiqueta">Dónde estamos</p>
+          <h2 class="titulo-seccion">Calle Mayor, 14</h2>
+          <address class="direccion">
+            Calle Mayor, 14<br>
+            Villanueva del Trigo<br>
+            Teléfono: <a href="tel:+34600123456">600 123 456</a>
+          </address>
+          <!-- En tu web real puedes poner aquí un <iframe> de Google Maps -->
+          <a class="boton boton--secundario" href="https://www.google.com/maps/search/?api=1&query=Calle+Mayor+14" target="_blank" rel="noopener">Abrir en Google Maps</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ENCARGOS (formulario) ===================== -->
+    <section id="encargos" class="seccion seccion--alterna">
+      <div class="contenedor">
+        <p class="etiqueta">Encargos</p>
+        <h2 class="titulo-seccion">¿Celebras algo? Te lo preparamos</h2>
+        <p class="intro-seccion">Tartas, bandejas de dulces o pan para eventos. Pide con 48 horas de antelación y te llamamos para confirmar.</p>
+
+        <!--
+          En una web real, para que el formulario envíe de verdad sin backend, puedes usar Formspree:
+          <form action="https://formspree.io/f/TU_ID" method="POST"> y quitar el preventDefault() del JS.
+          "novalidate" desactiva los avisos del navegador para usar los nuestros (script.js).
+        -->
+        <form id="formulario" class="formulario" novalidate>
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name">
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" placeholder="600 123 456">
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div class="campo">
+            <label for="tipo">Tipo de encargo</label>
+            <select id="tipo" name="tipo">
+              <option>Tarta</option>
+              <option>Bandeja de dulces</option>
+              <option>Pan para evento</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="fecha">Día de recogida</label>
+            <input id="fecha" name="fecha" type="date">
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div class="campo campo--ancho">
+            <label for="mensaje">¿Qué necesitas?</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Por ejemplo: tarta de queso para 10 personas"></textarea>
+            <p class="error" aria-live="polite"></p>
+          </div>
+          <div class="campo--ancho formulario__pie">
+            <button type="submit" class="boton boton--principal">Enviar encargo</button>
+          </div>
+          <p id="aviso-envio" class="aviso-envio" role="status" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== PIE ===================== -->
+  <div class="azulejos" aria-hidden="true"></div>
+  <footer class="pie">
+    <div class="contenedor pie__fila">
+      <p><strong>La Espiga</strong> · Horno y cafetería · Calle Mayor, 14</p>
+      <p class="pie__nota">Web de ejemplo con un negocio inventado.</p>
+    </div>
+  </footer>
+
+  <!-- "defer" hace que el script se ejecute cuando el HTML ya está cargado -->
+  <script src="script.js" defer></script>
+</body>
+</html>
